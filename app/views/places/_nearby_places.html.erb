@@ -1,0 +1,19 @@
+<% if nearby_places.present? && nearby_places.any? %>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <% nearby_places.each do |place| %>
+      <div class="p-4 border rounded-lg hover:bg-gray-50 transition">
+        <h3 class="font-semibold"><%= place[:name] %></h3>
+        <p class="text-sm text-gray-600"><%= place[:address] %></p>
+        <% if place[:rating].present? %>
+          <div class="flex items-center mt-1">
+            <span class="text-yellow-400">★</span>
+            <span class="text-sm ml-1"><%= place[:rating] %></span>
+            <span class="text-xs text-gray-500 ml-2">(<%= place[:reviews] %> reviews)</span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>No nearby places found.</p>
+<% end %>

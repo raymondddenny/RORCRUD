@@ -1,0 +1,43 @@
+<div class="bg-white border border-gray-200 rounded-xl p-8 shadow-sm max-w-2xl mx-auto" style="font-family: 'Georgia', 'Times New Roman', Times, serif;">
+  <% if content.present? %>
+    <%# Extract the headline and dateline from the content %>
+    <% headline = content.match(/<h3>(.*?)<\/h3>/)&.captures&.first || "About This Place" %>
+    <% dateline = content.match(/<p>(.*?)<\/p>/)&.captures&.first || "" %>
+    <div class="text-center mb-2">
+      <h1 style="font-size:2.1rem; font-weight:900; letter-spacing:-1px; margin-bottom:0.25rem; font-family:'Georgia',serif;"> <%= headline %> </h1>
+      <% if dateline.present? %>
+        <div style="font-variant:small-caps; color:#888; letter-spacing:0.12em; font-size:0.92rem; margin-bottom:0.4rem;"> <%= dateline %> </div>
+      <% end %>
+      <hr style="border-top:1.5px solid #dedede; width:60px; margin:0.75rem auto 1.5rem auto;">
+    </div>
+    <div class="text-gray-800 newspaper-body" style="text-align:justify; line-height:1.7; font-size:1.08em;">
+      <% body = content.gsub(/<h3>.*?<\/h3>/, "").gsub(/<p>.*?<\/p>/, "") %>
+      <%# Add drop cap to the first paragraph %>
+      <% body = body.sub(/<p>([A-Za-z])/, '<p><span style="float:left; font-size:2.5em; line-height:0.9; font-weight:bold; margin-right:0.18em; color:#222; font-family:Georgia,serif;">\\1</span>') %>
+      <%= body.html_safe %>
+    </div>
+    <style>
+      .newspaper-body ul {
+        list-style-type: disc;
+        margin-left: 2em;
+        font-size: 0.98em;
+        color: #444;
+      }
+      .newspaper-body h4 {
+        font-size: 1.1em;
+        font-weight: bold;
+        margin-top: 1.2em;
+        margin-bottom: 0.5em;
+        color: #222;
+        font-family: serif;
+      }
+      .newspaper-body p {
+        margin-bottom: 1em;
+        text-align: justify;
+        font-size: 1.04em;
+      }
+    </style>
+  <% else %>
+    <p class="italic text-gray-500">No information available for this place.</p>
+  <% end %>
+</div>
